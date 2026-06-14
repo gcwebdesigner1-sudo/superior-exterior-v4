@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superior Exterior Cleanings — Premium Pressure Washing Washington</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#030305;
+  --dark:#07070E;
+  --teal:#00D4E7;
+  --teal2:#0099AB;
+  --gold:#EAB308;
+  --white:#F5F5F5;
+  --muted:rgba(245,245,245,.52);
+  --dim:rgba(245,245,245,.24);
+  --glass:rgba(255,255,255,.045);
+  --glass2:rgba(255,255,255,.09);
+  --glow:rgba(0,212,231,.4);
+  --glow2:rgba(0,212,231,.15);
+  --grad:linear-gradient(135deg,#00D4E7,#0099AB);
+  --r:14px;--rs:8px;
+}
+html{scroll-behavior:auto}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;cursor:none}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;opacity:.032;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px}
+
+/* CURSOR */
+#cur{position:fixed;top:0;left:0;width:7px;height:7px;background:var(--teal);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cur-ring{position:fixed;top:0;left:0;width:34px;height:34px;border:1.5px solid rgba(0,212,231,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .22s,height .22s,border-color .22s,transform .05s}
+body.hov #cur-ring{width:54px;height:54px;border-color:var(--teal)}
+
+/* WEBGL */
+#heroGL{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 52px;background:rgba(3,3,5,.7);backdrop-filter:blur(22px);border-bottom:1px solid rgba(255,255,255,.045)}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:3px;text-decoration:none;color:var(--white);cursor:none}
+.logo span{color:var(--teal)}
+.nl{display:flex;align-items:center;gap:36px}
+.nl a{font-size:.72rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;cursor:none}
+.nl a:hover{color:var(--teal)}
+.btn-nav{background:var(--grad)!important;color:#fff!important;padding:10px 24px!important;border-radius:var(--rs)!important;box-shadow:0 0 20px var(--glow2)!important;font-weight:600!important;transition:box-shadow .2s,transform .15s!important}
+.btn-nav:hover{box-shadow:0 0 36px var(--glow)!important;transform:translateY(-1px)!important}
+
+/* HERO */
+#hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;overflow:hidden}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.65rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);border:1px solid rgba(0,212,231,.25);background:rgba(0,212,231,.06);padding:8px 20px;border-radius:100px;margin-bottom:30px;opacity:0}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.htitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(5.5rem,18vw,17rem);line-height:.85;letter-spacing:.025em;text-transform:uppercase;margin-bottom:24px;overflow:hidden}
+.htitle .char{display:inline-block;will-change:transform,opacity;transform:translateY(120%);opacity:0}
+.htitle .space{display:inline-block;width:.25em}
+.teal-word .char{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:460px;margin:0 auto 42px;line-height:1.8;opacity:0;transform:translateY(20px)}
+.hbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px;opacity:0;transform:translateY(20px)}
+.btn-p{display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#fff;text-decoration:none;padding:17px 42px;border-radius:var(--r);font-size:.88rem;font-weight:700;box-shadow:0 0 32px var(--glow),0 10px 32px rgba(0,0,0,.45);transition:box-shadow .2s;cursor:none;position:relative;overflow:hidden}
+.btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.16),transparent);pointer-events:none}
+.btn-g{display:inline-flex;align-items:center;gap:9px;background:var(--glass);color:var(--white);text-decoration:none;padding:17px 42px;border-radius:var(--r);font-size:.88rem;font-weight:500;border:1px solid var(--glass2);backdrop-filter:blur(12px);transition:background .2s,border-color .2s;cursor:none}
+.btn-g:hover{background:rgba(255,255,255,.08);border-color:rgba(0,212,231,.35)}
+.mag{transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+.htrust{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap;opacity:0;transform:translateY(14px)}
+.ti{display:flex;align-items:center;gap:7px;font-size:.79rem;color:var(--muted);font-weight:500}
+.ts{width:1px;height:16px;background:rgba(255,255,255,.1)}
+.gld{color:var(--gold);letter-spacing:1px}
+.scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--teal),transparent);animation:sh 2s ease-in-out infinite}
+.scroll-text{font-size:.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--dim)}
+@keyframes sh{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{opacity:0;transform:scaleY(0);transform-origin:bottom}}
+
+/* MARQUEE */
+.marquee-wrap{position:relative;z-index:1;background:var(--teal);padding:18px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.marquee-track{display:flex;width:max-content;animation:mq 22s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+.mi{font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#030305;white-space:nowrap;padding:0 32px;display:flex;align-items:center;gap:10px}
+.mi::after{content:'✦';font-size:.6rem;opacity:.7}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SECTIONS */
+section{position:relative;z-index:1}
+.sh{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5rem);letter-spacing:.04em;line-height:.9;margin-bottom:16px}
+.stag{font-size:.64rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:12px}
+.ssub{font-size:.98rem;color:var(--muted);line-height:1.8;max-width:490px}
+.shead{margin-bottom:56px}
+.shead.c{text-align:center}.shead.c .ssub{margin:0 auto}
+
+/* STATS */
+#stats{padding:90px 52px;background:var(--dark);border-bottom:1px solid rgba(255,255,255,.05)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2px;max-width:960px;margin:0 auto}
+.stat-item{text-align:center;padding:40px 20px;border-right:1px solid rgba(255,255,255,.05)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,7vw,6rem);letter-spacing:.04em;line-height:1;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:8px}
+.stat-lbl{font-size:.72rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--muted)}
+
+/* SERVICES */
+#services{padding:100px 52px;background:var(--bg)}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;max-width:1100px;margin:0 auto}
+.svc-card{background:var(--glass);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:36px 28px;cursor:none;position:relative;overflow:hidden;transition:border-color .3s}
+.svc-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(0,212,231,.1),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.svc-card:hover{border-color:rgba(0,212,231,.3)}
+.svc-card:hover::before{opacity:1}
+.svc-ico{width:54px;height:54px;border-radius:12px;background:rgba(0,212,231,.1);border:1px solid rgba(0,212,231,.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:22px}
+.svc-nm{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.06em;margin-bottom:10px}
+.svc-ds{font-size:.87rem;color:var(--muted);line-height:1.8}
+
+/* BEFORE/AFTER */
+#gallery{padding:100px 52px;background:var(--dark)}
+.ba-wrap{position:relative;width:100%;max-width:860px;margin:0 auto;aspect-ratio:4/3;overflow:hidden;border-radius:var(--r);cursor:ew-resize;user-select:none;-webkit-user-select:none;box-shadow:0 30px 100px rgba(0,0,0,.7);background:#06060A;border:1px solid rgba(255,255,255,.06)}
+.ba-a,.ba-b{position:absolute;inset:0;background-repeat:no-repeat;background-size:200% auto}
+.ba-a{background-position:right center;z-index:1}
+.ba-b{background-position:left center;z-index:2;clip-path:inset(0 50% 0 0)}
+.ba-ln{position:absolute;top:0;bottom:0;left:50%;width:2px;background:linear-gradient(to bottom,transparent,var(--teal),transparent);transform:translateX(-50%);z-index:3;pointer-events:none}
+.ba-kn{position:absolute;top:50%;left:50%;width:46px;height:46px;transform:translate(-50%,-50%);background:rgba(3,3,5,.88);backdrop-filter:blur(10px);border-radius:50%;border:1.5px solid rgba(0,212,231,.55);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px var(--glow);z-index:4;pointer-events:none}
+.ba-tags{position:absolute;top:14px;left:0;right:0;display:flex;justify-content:space-between;padding:0 16px;z-index:5;pointer-events:none}
+.ba-tg{font-size:.63rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px}
+.ba-tg.bf{background:rgba(0,0,0,.55);backdrop-filter:blur(8px);color:var(--muted);border:1px solid rgba(255,255,255,.1)}
+.ba-tg.af{background:rgba(0,212,231,.14);backdrop-filter:blur(8px);color:var(--teal);border:1px solid rgba(0,212,231,.3)}
+
+/* PROCESS - HORIZONTAL SCROLL */
+#process{background:var(--bg);padding:100px 0;overflow:hidden}
+.process-header{padding:0 52px;margin-bottom:56px;max-width:700px}
+.process-outer{overflow:hidden}
+.process-track{display:flex;width:max-content;gap:4px;padding:0 52px}
+.step{width:min(80vw,480px);flex:0 0 min(80vw,480px);background:var(--glass);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:48px 40px;position:relative}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:7rem;line-height:1;letter-spacing:.04em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;margin-bottom:18px;opacity:.35}
+.step-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.06em;margin-bottom:14px}
+.step-ds{font-size:.92rem;color:var(--muted);line-height:1.8}
+.step-arr{position:absolute;top:48px;right:40px;font-size:2rem;color:rgba(0,212,231,.2)}
+.drag-note{font-size:.66rem;color:var(--dim);letter-spacing:3px;text-transform:uppercase;padding:18px 52px 0;display:flex;align-items:center;gap:8px}
+.darr{animation:da 1.6s ease-in-out infinite}
+@keyframes da{0%,100%{transform:translateX(0)}50%{transform:translateX(10px)}}
+
+/* REVIEWS */
+#reviews{padding:100px 52px;background:var(--dark)}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;max-width:1100px;margin:0 auto}
+.rcard{background:var(--glass);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:30px;transition:border-color .3s,transform .3s;cursor:none}
+.rcard:hover{border-color:rgba(0,212,231,.22);transform:translateY(-4px)}
+.rstars{color:var(--gold);letter-spacing:2px;font-size:.92rem;margin-bottom:14px}
+.rtxt{font-size:.88rem;color:var(--muted);line-height:1.85;font-style:italic;margin-bottom:18px}
+.rauth{font-weight:600;font-size:.84rem}
+.rvia{font-size:.72rem;color:var(--dim);margin-top:3px}
+.rmore{text-align:center;margin-top:44px}
+.rmore a{color:var(--teal);font-size:.87rem;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(0,212,231,.3);padding-bottom:2px;transition:border-color .2s}
+.rmore a:hover{border-color:var(--teal)}
+
+/* SERVICE AREA */
+#area{padding:100px 52px;background:var(--bg)}
+.area-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:56px;max-width:1100px;margin:0 auto;align-items:start}
+.cities{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.city{font-size:.8rem;font-weight:500;border:1px solid rgba(255,255,255,.1);border-radius:var(--rs);padding:9px 15px;color:var(--muted);transition:border-color .2s,color .2s;display:flex;align-items:center;gap:6px;cursor:none}
+.city:hover{border-color:var(--teal);color:var(--teal)}
+.city::before{content:'→';font-size:.68rem;opacity:.4}
+.mbox{border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,.07);box-shadow:0 24px 72px rgba(0,0,0,.6)}
+.mbox iframe{width:100%;height:380px;border:0;display:block;filter:brightness(.75) contrast(1.15) saturate(.55) hue-rotate(175deg)}
+
+/* CTA */
+#cta{padding:160px 52px;text-align:center;background:var(--dark);position:relative;overflow:hidden}
+#cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 65% 75% at 50% 50%,rgba(0,212,231,.07),transparent 65%)}
+.cta-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,231,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,231,.05) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at 50% 50%,black,transparent 72%)}
+.cta-eyebrow{font-size:.64rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:18px;position:relative;display:block}
+.cta-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,7rem);letter-spacing:.04em;line-height:.88;margin-bottom:22px;position:relative}
+.cta-title em{font-style:normal;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sub{font-size:1.02rem;color:var(--muted);max-width:420px;margin:0 auto 52px;line-height:1.8;position:relative}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative}
+.btn-xl{display:inline-flex;align-items:center;gap:9px;background:var(--grad);color:#fff;text-decoration:none;padding:20px 58px;border-radius:16px;font-size:.95rem;font-weight:700;box-shadow:0 0 48px var(--glow),0 14px 44px rgba(0,0,0,.5);cursor:none;position:relative;overflow:hidden;transition:box-shadow .2s}
+.btn-xl::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);pointer-events:none}
+.btn-xl:hover{box-shadow:0 0 72px var(--glow)}
+.btn-gxl{display:inline-flex;align-items:center;gap:9px;background:var(--glass);color:var(--white);text-decoration:none;padding:20px 58px;border-radius:16px;font-size:.95rem;font-weight:500;border:1px solid var(--glass2);backdrop-filter:blur(12px);transition:all .2s;cursor:none}
+.btn-gxl:hover{background:rgba(255,255,255,.08);border-color:rgba(0,212,231,.3)}
+
+/* FOOTER */
+footer{background:var(--bg);padding:48px 52px;text-align:center;border-top:1px solid rgba(255,255,255,.06)}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;margin-bottom:10px}
+.flogo span{color:var(--teal)}
+.finfo{font-size:.82rem;color:var(--dim);line-height:2.2}
+.finfo a{color:var(--dim);text-decoration:none;transition:color .2s}
+.finfo a:hover{color:var(--teal)}
+
+/* UTILITY */
+.gsap-hidden{opacity:0;transform:translateY(40px)}
+.gsap-hidden-x{opacity:0;transform:translateX(-30px)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nl{display:none}
+  #hero,#stats,#services,#gallery,#reviews,#area,#cta{padding-left:20px;padding-right:20px}
+  .process-header,.drag-note{padding-left:20px;padding-right:20px}
+  .process-track{padding:0 20px}
+  .area-layout{grid-template-columns:1fr}
+  .htitle{font-size:clamp(4.5rem,22vw,9rem)}
+  .hbtns,.cta-btns{flex-direction:column;align-items:center}
+  body{cursor:auto}
+  #cur,#cur-ring{display:none}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.05)}
+}
+</style>
+</head>
+<body>
+
+<canvas id="heroGL"></canvas>
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#hero">SUPERIOR <span>EXTERIOR</span></a>
+  <div class="nl">
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#area">Area</a>
+    <a href="tel:2064953127" class="btn-nav">Call Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div style="position:relative;z-index:2;text-align:center">
+    <div class="hero-eyebrow">Washington's Premier Pressure Washing</div>
+    <h1 class="htitle" id="htitle">
+      <span class="word" id="w1"></span>
+      <br>
+      <span class="word teal-word" id="w2"></span>
+    </h1>
+    <p class="hero-sub">Professional exterior cleaning for homes across Greater Seattle. 5-star rated, licensed &amp; insured, built on honest work.</p>
+    <div class="hbtns">
+      <a href="tel:2064953127" class="btn-p mag" id="btn1">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.84a16 16 0 006.29 6.29l1.1-1.1a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (206) 495-3127
+      </a>
+      <a href="#services" class="btn-g mag" id="btn2">
+        Explore Services
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="htrust">
+      <div class="ti"><span class="gld">★★★★★</span> 5.0 Stars</div>
+      <div class="ts"></div>
+      <div class="ti">35+ Google Reviews</div>
+      <div class="ts"></div>
+      <div class="ti">Licensed &amp; Insured</div>
+    </div>
+  </div>
+  <div class="scroll-hint" id="scrollHint">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="mtrack">
+    <div class="mi">5-Star Rated</div>
+    <div class="mi">Licensed &amp; Insured</div>
+    <div class="mi">Washington State</div>
+    <div class="mi">Next-Day Service</div>
+    <div class="mi">35+ Reviews</div>
+    <div class="mi">100% Satisfaction</div>
+    <div class="mi">House Washing</div>
+    <div class="mi">Driveway Cleaning</div>
+    <div class="mi">Gutter Service</div>
+    <div class="mi">Solar Panels</div>
+    <!-- duplicate for seamless loop -->
+    <div class="mi">5-Star Rated</div>
+    <div class="mi">Licensed &amp; Insured</div>
+    <div class="mi">Washington State</div>
+    <div class="mi">Next-Day Service</div>
+    <div class="mi">35+ Reviews</div>
+    <div class="mi">100% Satisfaction</div>
+    <div class="mi">House Washing</div>
+    <div class="mi">Driveway Cleaning</div>
+    <div class="mi">Gutter Service</div>
+    <div class="mi">Solar Panels</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-item gsap-hidden">
+      <span class="stat-num"><span class="cnt" data-val="5" data-dec="1">0</span>★</span>
+      <span class="stat-lbl">Google Rating</span>
+    </div>
+    <div class="stat-item gsap-hidden" style="transition-delay:.07s">
+      <span class="stat-num"><span class="cnt" data-val="35">0</span>+</span>
+      <span class="stat-lbl">5-Star Reviews</span>
+    </div>
+    <div class="stat-item gsap-hidden" style="transition-delay:.14s">
+      <span class="stat-num"><span class="cnt" data-val="100">0</span>%</span>
+      <span class="stat-lbl">Satisfaction</span>
+    </div>
+    <div class="stat-item gsap-hidden" style="transition-delay:.21s">
+      <span class="stat-num">Next</span>
+      <span class="stat-lbl">Day Service</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="shead gsap-hidden" style="max-width:1100px;margin:0 auto 56px">
+    <span class="stag">What We Do</span>
+    <h2 class="sh">Our Services</h2>
+    <p class="ssub">Full-service exterior cleaning for every surface — done right, every time.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card gsap-hidden">
+      <div class="svc-ico">🏠</div>
+      <div class="svc-nm">House Washing</div>
+      <p class="svc-ds">Full exterior wash removing dirt, mold, mildew, and grime from all siding types — vinyl, wood, stucco, and more.</p>
+    </div>
+    <div class="svc-card gsap-hidden" style="--d:.06s">
+      <div class="svc-ico">🚗</div>
+      <div class="svc-nm">Driveway &amp; Concrete</div>
+      <p class="svc-ds">High-pressure cleaning that blasts away oil stains, algae, moss, and years of buildup from any surface.</p>
+    </div>
+    <div class="svc-card gsap-hidden" style="--d:.12s">
+      <div class="svc-ico">🍃</div>
+      <div class="svc-nm">Gutter Cleaning</div>
+      <p class="svc-ds">Complete gutter cleaning and flush-out to restore proper drainage and protect your foundation.</p>
+    </div>
+    <div class="svc-card gsap-hidden" style="--d:.18s">
+      <div class="svc-ico">☀️</div>
+      <div class="svc-nm">Solar Panel Cleaning</div>
+      <p class="svc-ds">Careful solar panel cleaning that removes dust and buildup to maximize energy output year-round.</p>
+    </div>
+    <div class="svc-card gsap-hidden" style="--d:.24s">
+      <div class="svc-ico">🪵</div>
+      <div class="svc-nm">Deck &amp; Patio</div>
+      <p class="svc-ds">Revive outdoor living spaces with a deep clean lifting embedded dirt, moss, and staining from any surface.</p>
+    </div>
+    <div class="svc-card gsap-hidden" style="--d:.3s">
+      <div class="svc-ico">🏢</div>
+      <div class="svc-nm">Commercial</div>
+      <p class="svc-ds">Professional exterior cleaning for storefronts, parking lots, and commercial properties across Greater Seattle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER -->
+<section id="gallery">
+  <div style="max-width:860px;margin:0 auto">
+    <div class="shead c gsap-hidden">
+      <span class="stag">The Proof</span>
+      <h2 class="sh">Before &amp; After</h2>
+      <p class="ssub">Drag the handle to reveal the transformation.</p>
+    </div>
+  </div>
+  <div class="ba-wrap gsap-hidden" id="ba1">
+    <div class="ba-tags"><span class="ba-tg bf">Before</span><span class="ba-tg af">After</span></div>
+    <div class="ba-a" id="ba1a"></div>
+    <div class="ba-b" id="ba1b"></div>
+    <div class="ba-ln" id="ba1l"></div>
+    <div class="ba-kn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00D4E7" stroke-width="2.5" stroke-linecap="round">
+        <polyline points="15 18 9 12 15 6"/><polyline points="9 18 15 12 9 6" transform="translate(6,0)"/>
+      </svg>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:28px" class="gsap-hidden">
+    <a href="https://www.google.com/maps/place/Superior+Exterior+Cleanings" target="_blank" rel="noopener" style="color:var(--teal);font-size:.86rem;font-weight:600;text-decoration:none;border-bottom:1px solid rgba(0,212,231,.3);padding-bottom:2px">View all photos on Google ↗</a>
+  </p>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-header gsap-hidden">
+    <span class="stag">How It Works</span>
+    <h2 class="sh">The Process</h2>
+    <p class="ssub">Simple, fast, and zero hassle from start to finish.</p>
+  </div>
+  <div class="process-outer">
+    <div class="process-track" id="ptrack">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-title">Book Online or Call</div>
+        <p class="step-ds">Reach out by phone or the contact form. We'll give you a free, honest quote — no hidden fees, no surprises.</p>
+        <div class="step-arr">→</div>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-title">We Come To You</div>
+        <p class="step-ds">Our team arrives on time with all equipment. Most jobs are available next-day. You don't even need to be home.</p>
+        <div class="step-arr">→</div>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-title">Spotless Results</div>
+        <p class="step-ds">We do a thorough job and clean up after ourselves. You come home to a property that looks brand new.</p>
+        <div class="step-arr">✓</div>
+      </div>
+    </div>
+  </div>
+  <p class="drag-note gsap-hidden"><span class="darr">→</span> Drag to explore</p>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="shead c gsap-hidden">
+      <span class="stag">What Clients Say</span>
+      <h2 class="sh">Google Reviews</h2>
+    </div>
+    <div class="rev-grid">
+      <div class="rcard gsap-hidden">
+        <div class="rstars">★★★★★</div>
+        <p class="rtxt">"Communication, honest hard work, and exceptional results — this company really stands out. Their professionalism and knowledge made the whole experience easy."</p>
+        <div class="rauth">Tal B.</div>
+        <div class="rvia">via Google</div>
+      </div>
+      <div class="rcard gsap-hidden" style="transition-delay:.08s">
+        <div class="rstars">★★★★★</div>
+        <p class="rtxt">"We had our house, driveway, patio, and gutters cleaned. Our house looks absolutely amazing. Can't thank you enough for the great work and service!"</p>
+        <div class="rauth">Shirley W.</div>
+        <div class="rvia">via Google</div>
+      </div>
+      <div class="rcard gsap-hidden" style="transition-delay:.16s">
+        <div class="rstars">★★★★★</div>
+        <p class="rtxt">"Next day service, a solid quote, and the job was 100% complete. They cleaned up after themselves and left everything spotless. Highly recommend."</p>
+        <div class="rauth">Harold T.</div>
+        <div class="rvia">via Google</div>
+      </div>
+    </div>
+    <div class="rmore gsap-hidden">
+      <a href="https://www.google.com/maps/place/Superior+Exterior+Cleanings" target="_blank" rel="noopener">See all 35 reviews on Google ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- AREA -->
+<section id="area">
+  <div class="area-layout">
+    <div class="gsap-hidden-x">
+      <span class="stag">Where We Serve</span>
+      <h2 class="sh">Service Area</h2>
+      <p class="ssub" style="margin-bottom:24px">Serving homes and businesses across Greater Seattle and the Puget Sound region.</p>
+      <div class="cities">
+        <div class="city">Seattle</div><div class="city">Renton</div><div class="city">Kent</div>
+        <div class="city">Bellevue</div><div class="city">Auburn</div><div class="city">Federal Way</div>
+        <div class="city">Tacoma</div><div class="city">Covington</div><div class="city">Maple Valley</div>
+        <div class="city">+More</div>
+      </div>
+    </div>
+    <div class="mbox gsap-hidden">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d173423.66876799!2d-122.43539!3d47.51369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54906a87b3375ffd%3A0x47b8cc79533d3d89!2sSuperior%20Exterior%20Cleanings!5e0!3m2!1sen!2sus!4v1718000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="cta">
+  <div class="cta-grid-bg"></div>
+  <span class="cta-eyebrow gsap-hidden">Get Started Today</span>
+  <h2 class="cta-title gsap-hidden">Ready for a <em>Spotless</em><br>Home?</h2>
+  <p class="cta-sub gsap-hidden">Licensed &amp; insured · Washington State · Same-week availability</p>
+  <div class="cta-btns gsap-hidden">
+    <a href="#" class="btn-xl mag">Book a Free Quote</a>
+    <a href="tel:2064953127" class="btn-gxl mag">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.84a16 16 0 006.29 6.29l1.1-1.1a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      (206) 495-3127
+    </a>
+  </div>
+</div>
+
+<footer>
+  <div class="flogo">SUPERIOR <span>EXTERIOR</span> CLEANINGS</div>
+  <div class="finfo">
+    <a href="tel:2064953127">(206) 495-3127</a> &nbsp;·&nbsp; Washington State &nbsp;·&nbsp; Opens 9 AM<br>
+    <span style="font-size:.76rem">© 2025 Superior Exterior Cleanings · All rights reserved</span>
+  </div>
+</footer>
+
+<script>
+/* =====================
+   WEBGL WATER SHADER
+   ===================== */
+(function(){
+  const canvas = document.getElementById('heroGL');
+  const W = window.innerWidth, H = window.innerHeight;
+  canvas.width = W; canvas.height = H;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(W, H);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+  const geo = new THREE.PlaneGeometry(2, 2);
+  const mat = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime:     { value: 0 },
+      uMouse:    { value: new THREE.Vector2(0.5, 0.5) },
+      uRipple:   { value: 0.0 },
+      uAspect:   { value: W / H }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+      void main() { vUv = uv; gl_Position = vec4(position, 1.0); }
+    `,
+    fragmentShader: `
+      precision mediump float;
+      uniform float uTime;
+      uniform vec2  uMouse;
+      uniform float uRipple;
+      uniform float uAspect;
+      varying vec2  vUv;
+
+      float rand(vec2 c){ return fract(sin(dot(c,vec2(12.9898,78.233)))*43758.5453); }
+      float noise(vec2 st){
+        vec2 i=floor(st); vec2 f=fract(st);
+        float a=rand(i), b=rand(i+vec2(1,0)), c=rand(i+vec2(0,1)), d=rand(i+vec2(1,1));
+        vec2 u=f*f*(3.0-2.0*f);
+        return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;
+      }
+
+      void main(){
+        vec2 uv = vUv;
+        vec2 aspect = vec2(uAspect, 1.0);
+
+        // Mouse ripple
+        vec2 toMouse = (uv - uMouse) * aspect;
+        float dist = length(toMouse);
+        float wave = sin(dist * 42.0 - uTime * 6.0) * exp(-dist * 5.5) * uRipple;
+
+        // Animated noise layers
+        float n1 = noise(uv * 2.8 + uTime * 0.11);
+        float n2 = noise(uv * 5.5 - vec2(uTime * 0.065, 0.0));
+        float n3 = noise(uv * 10.0 + vec2(0.0, uTime * 0.04));
+
+        // Color stops
+        vec3 black  = vec3(0.012, 0.012, 0.022);
+        vec3 deep   = vec3(0.01,  0.18,  0.24);
+        vec3 teal   = vec3(0.0,   0.75,  0.88);
+
+        float m = n1 * 0.5 + n2 * 0.25 + wave * 2.5;
+        float hi = n3 * 0.15 + max(0.0, wave) * 3.0;
+
+        vec3 col = mix(black, deep, clamp(m, 0.0, 1.0));
+        col = mix(col, teal, clamp(hi, 0.0, 0.6));
+
+        // Vignette
+        float vig = 1.0 - smoothstep(0.35, 1.3, length((uv-0.5)*vec2(1.0,1.2)*1.5));
+        col *= 0.45 + vig * 0.55;
+
+        // Film grain
+        col += (rand(uv + fract(uTime*0.1)) - 0.5) * 0.022;
+
+        gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+      }
+    `
+  });
+
+  scene.add(new THREE.Mesh(geo, mat));
+
+  // Mouse tracking
+  let tx = 0.5, ty = 0.5, rippleTarget = 0;
+  window.addEventListener('mousemove', e => {
+    tx = e.clientX / window.innerWidth;
+    ty = 1.0 - e.clientY / window.innerHeight;
+    rippleTarget = 1.2;
+  });
+
+  let cx = 0.5, cy = 0.5, rippleCur = 0;
+  (function animate(t){
+    requestAnimationFrame(animate);
+    const dt = t * 0.001;
+    cx += (tx - cx) * 0.04;
+    cy += (ty - cy) * 0.04;
+    rippleCur += (rippleTarget - rippleCur) * 0.04;
+    rippleTarget *= 0.97;
+    mat.uniforms.uTime.value = dt;
+    mat.uniforms.uMouse.value.set(cx, cy);
+    mat.uniforms.uRipple.value = rippleCur;
+    renderer.render(scene, camera);
+  })(0);
+
+  window.addEventListener('resize', () => {
+    const nw = window.innerWidth, nh = window.innerHeight;
+    renderer.setSize(nw, nh);
+    mat.uniforms.uAspect.value = nw / nh;
+  });
+})();
+
+/* =====================
+   LENIS + GSAP
+   ===================== */
+gsap.registerPlugin(ScrollTrigger);
+
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  smooth: true
+});
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(time => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+
+/* =====================
+   HERO CHARACTER STAGGER
+   ===================== */
+function splitChars(str, el) {
+  el.innerHTML = '';
+  str.split('').forEach(ch => {
+    const s = document.createElement('span');
+    s.className = 'char';
+    s.textContent = ch === ' ' ? ' ' : ch;
+    el.appendChild(s);
+  });
+  return el.querySelectorAll('.char');
+}
+
+const w1 = splitChars('SUPERIOR', document.getElementById('w1'));
+const w2 = splitChars('EXTERIOR', document.getElementById('w2'));
+
+const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: .6, delay: .2 })
+  .to(w1, { y: 0, opacity: 1, duration: .8, stagger: .05 }, '-=.3')
+  .to(w2, { y: 0, opacity: 1, duration: .8, stagger: .05 }, '-=.55')
+  .to('.hero-sub', { opacity: 1, y: 0, duration: .7 }, '-=.4')
+  .to('.hbtns', { opacity: 1, y: 0, duration: .7 }, '-=.5')
+  .to('.htrust', { opacity: 1, y: 0, duration: .6 }, '-=.4')
+  .to('#scrollHint', { opacity: 1, duration: .6 }, '-=.3');
+
+/* =====================
+   GSAP SCROLL REVEALS
+   ===================== */
+gsap.utils.toArray('.gsap-hidden').forEach(el => {
+  const delay = parseFloat(getComputedStyle(el).getPropertyValue('--d') || '0') || 0;
+  gsap.to(el, {
+    y: 0,
+    opacity: 1,
+    duration: .85,
+    delay,
+    ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 85%' }
+  });
+});
+
+gsap.utils.toArray('.gsap-hidden-x').forEach(el => {
+  gsap.to(el, {
+    x: 0,
+    opacity: 1,
+    duration: .9,
+    ease: 'power3.out',
+    scrollTrigger: { trigger: el, start: 'top 85%' }
+  });
+});
+
+/* Hero parallax */
+gsap.to('.hero-sub, .hbtns, .htrust', {
+  y: -60,
+  opacity: 0,
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: '+=60%',
+    scrub: 1.5
+  }
+});
+gsap.to('#w1, #w2', {
+  y: -100,
+  scrollTrigger: {
+    trigger: '#hero',
+    start: 'top top',
+    end: '+=60%',
+    scrub: 1.5
+  }
+});
+
+/* =====================
+   SERVICE CARD TILT
+   ===================== */
+document.querySelectorAll('.svc-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const cx = r.width / 2, cy = r.height / 2;
+    const rotX = -(y - cy) / cy * 7;
+    const rotY =  (x - cx) / cx * 7;
+    card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(4px)`;
+    card.style.transition = 'transform .1s';
+    card.style.setProperty('--mx', x + 'px');
+    card.style.setProperty('--my', y + 'px');
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    card.style.transition = 'transform .6s cubic-bezier(.25,.46,.45,.94)';
+  });
+});
+
+/* =====================
+   MAGNETIC BUTTONS
+   ===================== */
+document.querySelectorAll('.mag').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    el.style.transition = 'transform .1s ease';
+  });
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    const dx = e.clientX - r.left - r.width / 2;
+    const dy = e.clientY - r.top - r.height / 2;
+    el.style.transform = `translate(${dx * 0.32}px, ${dy * 0.32}px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transition = 'transform .55s cubic-bezier(.25,.46,.45,.94)';
+    el.style.transform = 'translate(0,0)';
+  });
+});
+
+/* =====================
+   COUNTUP
+   ===================== */
+const cntObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting || e.target._done) return;
+    e.target._done = true;
+    const el = e.target;
+    const val = parseFloat(el.dataset.val);
+    const dec = el.dataset.dec === '1';
+    const dur = 1600;
+    const start = performance.now();
+    (function step(now){
+      const p = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = dec ? (val * ease).toFixed(1) : Math.round(val * ease);
+      if(p < 1) requestAnimationFrame(step);
+      else el.textContent = dec ? val.toFixed(1) : val;
+    })(start);
+  });
+}, { threshold: .5 });
+document.querySelectorAll('.cnt').forEach(el => cntObs.observe(el));
+
+/* =====================
+   BEFORE / AFTER
+   ===================== */
+const GU = 'https://lh3.googleusercontent.com/grass-cs/ANxoTn1qBx-PrUAZXBfHGzAlXMpHAWTvPTC_rX7yst4TbvWcpuVDe86DYosjLaB8J8mRgBJUBfhL1rK0mYL9Kt0nMTCWZXv2wK-aHN2PN8qnNLLiJOWnuKwUM68G-qoXa4Y45UgqEqwt-up23e8m=w1200-h900-p-k-no';
+document.getElementById('ba1a').style.backgroundImage = `url("${GU}")`;
+document.getElementById('ba1b').style.backgroundImage = `url("${GU}")`;
+(function(){
+  const wrap = document.getElementById('ba1');
+  const bab  = document.getElementById('ba1b');
+  const bal  = document.getElementById('ba1l');
+  let active = false;
+  function mv(x){
+    const r = wrap.getBoundingClientRect();
+    let p = Math.max(.02, Math.min(.98, (x - r.left) / r.width));
+    bab.style.clipPath = `inset(0 ${(100 - p*100).toFixed(2)}% 0 0)`;
+    bal.style.left = (p*100) + '%';
+  }
+  wrap.addEventListener('mousedown',  e => { active = true; mv(e.clientX); e.preventDefault(); });
+  wrap.addEventListener('touchstart', e => { active = true; mv(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mousemove',  e => { if(active) mv(e.clientX); });
+  window.addEventListener('touchmove',  e => { if(active) mv(e.touches[0].clientX); }, { passive: true });
+  window.addEventListener('mouseup',  () => active = false);
+  window.addEventListener('touchend', () => active = false);
+})();
+
+/* =====================
+   PROCESS DRAG SCROLL
+   ===================== */
+const ptrack = document.getElementById('ptrack');
+let isDown = false, startX, scrollLeft;
+ptrack.addEventListener('mousedown', e => {
+  isDown = true;
+  startX = e.pageX - ptrack.offsetLeft;
+  scrollLeft = ptrack.scrollLeft;
+  ptrack.style.cursor = 'grabbing';
+});
+window.addEventListener('mouseup', () => { isDown = false; ptrack.style.cursor = ''; });
+ptrack.addEventListener('mousemove', e => {
+  if(!isDown) return;
+  e.preventDefault();
+  ptrack.scrollLeft = scrollLeft - (e.pageX - ptrack.offsetLeft - startX);
+});
+ptrack.addEventListener('wheel', e => {
+  e.preventDefault();
+  ptrack.scrollLeft += e.deltaY;
+}, { passive: false });
+
+/* =====================
+   CUSTOM CURSOR
+   ===================== */
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let cx = 0, cy = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; });
+(function animateCursor(){
+  rx += (cx - rx) * .1;
+  ry += (cy - ry) * .1;
+  cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animateCursor);
+})();
+document.querySelectorAll('a,button,.svc-card,.ba-wrap,.rcard,.city').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
+});
+
+/* SMOOTH SCROLL for anchors */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); lenis.scrollTo(t, { offset: -66, duration: 1.4 }); }
+  });
+});
+</script>
+</body>
+</html>
